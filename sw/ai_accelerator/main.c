@@ -7,10 +7,11 @@ float PARAMS[4] = {1.2, 3.4, 5.6, 7.8};
 float predict(float *input_data, unsigned int size, unsigned int delay);
 
 int main(int argc, char **argv) {
-	int n = printf("ABCDEFX %s\n", "Done");
+	int n = printf("Running Linear Regression\n");
 
 	float input_data[4] = {1.0, 2.0, 3.0, 4.0};
-	printf("Prediction: %f\n", predict(input_data, 4, 0));
+	float prediction = predict(input_data, 4, 0);
+	printf("Prediction: %f\n", prediction);
 
 	return 0;
 }
