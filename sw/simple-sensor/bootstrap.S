@@ -73,11 +73,12 @@ csrw    mepc, t0
 sw      a0, 9 * REGBYTES(sp)
 
 j       done_trap
+
 handle_irq:
 mv      a0, t2
 jal     level_1_interrupt_handler
-done_trap:
 
+done_trap:
 // re-store the saved context
 LOAD	x1, 0x0(sp)
 LOAD	x4, 3 * REGBYTES(sp)
