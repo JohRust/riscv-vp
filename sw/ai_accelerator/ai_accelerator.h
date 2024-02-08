@@ -6,9 +6,11 @@
 #include "unistd.h"
 #include "stdint.h"
 
+
 // Some random coefficients for the linear regression model
 float COEFFS[4] = {1.2, 3.4, 5.6, 7.8};
-
+// Where the prediction requests are put
+static volatile char * const ACCLERATOR_INPUT_ADDR = (char * const)0x50000000;
 
 /**
  * @brief Waits for a specified number of operations.

@@ -1,4 +1,5 @@
 #include "ai_caller.h"
+#include "ai_accelerator.h"
 
 void explain_prediction(float *input_data, unsigned int size, float *shapley_values){
     int NUM_INPUTS = 12;
@@ -14,7 +15,7 @@ void explain_prediction(float *input_data, unsigned int size, float *shapley_val
     // Do predictions for each input
     float predictions[NUM_INPUTS];
     for(int i = 0; i < NUM_INPUTS; i++){
-        predictions[i] = do_prediction(inputs[i], size);
+        predictions[i] = req_prediction(inputs[i], size);
     }
 
     for(int i = 0; i < size; i++){
@@ -23,6 +24,7 @@ void explain_prediction(float *input_data, unsigned int size, float *shapley_val
 }
 
 
-float do_prediction(float *input_data, unsigned int size){
+float req_prediction(float *input_data, unsigned int size){
     // TODO: Implement this function
+    
 }

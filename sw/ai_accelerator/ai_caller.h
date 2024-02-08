@@ -10,11 +10,11 @@
 void explain_prediction(float *input_data, unsigned int size, float *shapley_values);
 
 /**
- * @brief Predicts the output based on the input data using a linear regression model.
+ * @brief Requests a predictions for the input data using a linear regression model.
  * 
  * @param input_data The array of input data.
  * @param size The size of the input data array.
  * 
  * @return The predicted output value.
 */
-float do_prediction(float *input_data, unsigned int size);
+float req_prediction(float *input_data, unsigned int size);
