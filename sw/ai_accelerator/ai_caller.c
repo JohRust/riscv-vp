@@ -24,7 +24,16 @@ void explain_prediction(float *input_data, unsigned int size, float *shapley_val
 }
 
 
-float req_prediction(float *input_data, unsigned int size){
+float req_prediction(float *input_data, unsigned int input_size){
     // TODO: Implement this function
-    
+    dma_completed = 0;
+	*DMA_SRC_ADDR = (uint32_t)(&input_data[0]);
+	*DMA_DST_ADDR = (uint32_t)(&pred);
+	*DMA_LEN_ADDR = sizeof(input_size);
+	*DMA_OP_ADDR  = DMA_OP_MEMCPY;
+
+    while (!dma_completed) {
+        asm volatile ("wfi");
+    }
+    return pred;
 }

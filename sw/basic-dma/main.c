@@ -40,6 +40,7 @@ int main() {
 	}
 
 	for (int i=0; i<32; ++i) {
+		// Prints "FFFF".. since 70 is the ordinal value of 'F'
 		*TERMINAL_ADDR = dst[i];
 	}
 	*TERMINAL_ADDR = '\n';

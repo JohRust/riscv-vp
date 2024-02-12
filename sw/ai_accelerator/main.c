@@ -8,6 +8,12 @@
 
 volatile int was_itr_triggered = 0;
 
+// TODO: Call this
+void init() {
+	register_interrupt_handler(4, dma_irq_handler);
+}
+
+
 int main(int argc, char **argv) {
 	int n = printf("Running Linear Regression\n");
 
