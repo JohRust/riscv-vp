@@ -37,3 +37,4 @@ float req_prediction(float *input_data, unsigned int input_size){
     }
     return pred;
 }
+
