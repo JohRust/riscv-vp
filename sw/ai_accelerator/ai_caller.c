@@ -24,7 +24,7 @@ void explain_prediction(float *input_data, unsigned int size, float *shapley_val
 }
 
 
-float req_prediction(float *input_data, unsigned int input_size){
+float req_prediction(const float *input_data, unsigned int input_size){
     float pred;
     dma_completed = 0;
 	*DMA_SRC_ADDR = (uint32_t)(&input_data[0]);

@@ -17,4 +17,4 @@ void explain_prediction(float *input_data, unsigned int size, float *shapley_val
  * 
  * @return The predicted output value.
 */
-float req_prediction(float *input_data, unsigned int size);
+float req_prediction(const float *input_data, unsigned int size);

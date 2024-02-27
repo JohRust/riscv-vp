@@ -1,7 +1,7 @@
 #include <vector>
 #include <cstdint>
 
-void replaceValues(std::vector<float>& array, const std::vector<bool>& mask, std::vector<float>& newValues);
+void replaceValues(std::vector<float>& array, const std::vector<bool>& mask, const std::vector<float>& newValues);
 
 uint32_t binomialCoeff(uint32_t n, uint32_t k);
 

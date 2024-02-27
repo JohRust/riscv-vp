@@ -1,8 +1,9 @@
 #include "shap.h"
+#include "ai_caller.h"
 #include <cstdint>
 
 
-void replaceValues(std::vector<float>& array, const std::vector<bool>& mask, std::vector<float>& newValues) {
+void replaceValues(std::vector<float>& array, const std::vector<bool>& mask, const std::vector<float>& newValues) {
     // Replace values in the array based on the mask
     for (size_t i = 0; i < array.size(); ++i) {
         if (mask[i]) {
@@ -43,7 +44,9 @@ void explainPrediction(const std::vector<float>& input_data, std::vector<float>&
                         numMasked++;
                     }
                 }
-                float marginalContribution = (reqPrediction(input_data, mask) - reqPrediction(input_data, mask)) / binomialCoeff(n - 1, numMasked);
+                std::vector<float> data_masked(input_data);
+                replaceValues(data_masked, mask, input_data);
+                float marginalContribution = (req_prediction(&input_data[0], input_data.size()) - req_prediction(&data_masked[0], data_masked.size())) / binomialCoeff(n - 1, numMasked);
                 shapley_values[i] += marginalContribution;
                 mask[j] = false;
             }
