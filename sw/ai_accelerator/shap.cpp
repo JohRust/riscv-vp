@@ -2,6 +2,7 @@
 #include "ai_caller.h"
 #include <cstdint>
 
+std::vector<std::vector<float>> background_data;
 
 void replaceValues(std::vector<float>& array, const std::vector<bool>& mask, const std::vector<float>& newValues) {
     // Replace values in the array based on the mask
@@ -25,6 +26,27 @@ uint32_t binomialCoeff(uint32_t n, uint32_t k) {
     return res;
 }
 
+uint64_t factorial(uint32_t n) {
+    // Calculate the factorial of n
+    uint64_t res = 1;
+    for (uint32_t i = 1; i <= n; ++i) {
+        res *= i;
+    }
+    return res;
+}
+
+float shapley_frequency(uint32_t n, uint32_t i) {
+    // Calculate the frequency of feature i in the shapley value calculation
+    return (float) factorial(n) / (factorial(i) * factorial(n - 1 - i));
+}
+
+float marginalContribution(const std::vector<float>& input_data, const std::vector<bool>& mask) {
+    // Calculate the marginal contribution of feature i
+    std::vector<float> data_masked(input_data);
+    replaceValues(data_masked, mask, input_data);
+    return (req_prediction(&input_data[0], input_data.size()) - req_prediction(&data_masked[0], data_masked.size()));
+}
+
 // TODO: Extract requests and make 
 void explainPrediction(const std::vector<float>& input_data, std::vector<float>& shapley_values) {
     // Calculate the shapley value of every value in input_data
@@ -32,11 +54,11 @@ void explainPrediction(const std::vector<float>& input_data, std::vector<float>&
     for (uint32_t i = 0; i < n; ++i) {
         shapley_values[i] = 0;
     }
-    for (uint32_t i = 0; i < n; ++i) {
+    for (uint32_t i = 0; i < n; ++i) { // Shapley value for feature i
         std::vector<bool> mask(n, false);
         mask[i] = true;
         for (uint32_t j = 0; j < n; ++j) {
-            if (j != i) {
+            if (j != i) { 
                 mask[j] = true;
                 uint32_t numMasked = 0;
                 for (uint32_t k = 0; k < n; ++k) {
@@ -46,6 +68,7 @@ void explainPrediction(const std::vector<float>& input_data, std::vector<float>&
                 }
                 std::vector<float> data_masked(input_data);
                 replaceValues(data_masked, mask, input_data);
+                
                 float marginalContribution = (req_prediction(&input_data[0], input_data.size()) - req_prediction(&data_masked[0], data_masked.size())) / binomialCoeff(n - 1, numMasked);
                 shapley_values[i] += marginalContribution;
                 mask[j] = false;
