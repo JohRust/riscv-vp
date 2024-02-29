@@ -1,16 +1,15 @@
 #pragma once
 
-#include "stdio.h"
 #include "errno.h"
+#include "stdint.h"
+#include "stdio.h"
 #include "string.h"
 #include "unistd.h"
-#include "stdint.h"
-
 
 // Some random coefficients for the linear regression model
 float COEFFS[4] = {1.2, 3.4, 5.6, 7.8};
 // Where the prediction requests are put
-static volatile char * const ACCLERATOR_INPUT_ADDR = (char * const)0x50000000;
+static volatile char *const ACCLERATOR_INPUT_ADDR = (char *const)0x50000000;
 
 /**
  * @brief Waits for a specified number of operations.
@@ -21,7 +20,6 @@ static volatile char * const ACCLERATOR_INPUT_ADDR = (char * const)0x50000000;
  * @param nOps The number of operations to wait for.
  */
 void wait_nops(uint32_t nOps);
-
 
 /**
  * Predicts the output based on the input data using a linear regression model.
