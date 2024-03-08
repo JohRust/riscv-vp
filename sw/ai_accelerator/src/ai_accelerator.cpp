@@ -6,10 +6,10 @@ void wait_nops(uint32_t nOps) {
 	}
 }
 
-float predict(float *input_data, unsigned int size, unsigned int delay) {
+float predict(const float *input_data, unsigned int size, unsigned int delay) {
 	wait_nops(delay);
 	float sum = 0.0;
-	for (int i = 0; i < size; i++) {
+	for (unsigned int i = 0; i < size; i++) {
 		sum += COEFFS[i] * input_data[i];
 	}
 	return sum;

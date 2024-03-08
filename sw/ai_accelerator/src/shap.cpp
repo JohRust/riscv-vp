@@ -1,5 +1,4 @@
 #include "shap.h"
-
 #include <cstdint>
 
 #include "ai_caller.h"
@@ -8,7 +7,7 @@ std::vector<std::vector<float>> background_data;
 
 void replaceValues(std::vector<float>& array, const std::vector<bool>& mask, const std::vector<float>& newValues) {
 	// Replace values in the array based on the mask
-	for (size_t i = 0; i < array.size(); ++i) {
+	for (std::size_t i = 0; i < array.size(); ++i) {
 		if (mask[i]) {
 			array[i] = newValues[i];
 		}
@@ -28,8 +27,10 @@ uint32_t binomialCoeff(uint32_t n, uint32_t k) {
 	return res;
 }
 
-uint64_t factorial(uint32_t n) {
-	// Calculate the factorial of n
+uint64_t factorial(uint64_t n) {
+	// Factorials larger than 20 cause overflow
+	if (n > 20) return -1;
+
 	uint64_t res = 1;
 	for (uint32_t i = 1; i <= n; ++i) {
 		res *= i;
@@ -38,8 +39,12 @@ uint64_t factorial(uint32_t n) {
 }
 
 float shapley_frequency(uint32_t n, uint32_t s) {
-	// Calculate the frequency of feature i in the shapley value calculation
-	return n / binomialCoeff(n, s);
+	// Calculate the frequency of feature i in the shapley value calculation.
+	// Equvalent to (n-s-1)! * s! / n!, but without overflow
+	if (n-s <= 0) {
+		return 0;
+	}
+	return 1.0f / (binomialCoeff(n, s) * (n-s));
 }
 
 void explainPrediction(std::vector<float> input_data, std::vector<float>& shapley_values) {
@@ -60,7 +65,7 @@ void explainPrediction(std::vector<float> input_data, std::vector<float>& shaple
 
 			auto mask = getAsBoolVector(j, n - 1);
 			mask.insert(mask.begin() + i, false);  // Add the feature back in
-			                                       // We need to know the size of the subset called |S|
+			// We need to know the size of the subset called |S|
 			uint32_t numMasked = 0;
 			for (uint32_t k = 0; k < n; ++k) {
 				if (mask[k]) {

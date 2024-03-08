@@ -1,27 +1,36 @@
 #include <iostream>
 #include <stdint.h>
 #include <gtest/gtest.h>
+#include "../src/shap.h"
 
-uint32_t binomialCoeff(uint32_t n, uint32_t k) {
-    // Calculate the binomial coefficient
-    if (k > n - k) {
-        k = n - k;
-    }
-    uint32_t res = 1;
-    for (uint32_t i = 0; i < k; ++i) {
-        res *= (n - i);
-        res /= (i + 1);
-    }
-    return res;
+// Test the binomial coefficient function
+TEST(binomialCoeff, bonimialCoeffTest) {
+    EXPECT_EQ(binomialCoeff(5, 2), 10);
+    EXPECT_EQ(binomialCoeff(10, 3), 120);
+    EXPECT_EQ(binomialCoeff(6, 4), 15);
+    EXPECT_EQ(binomialCoeff(8, 0), 1);
+    EXPECT_EQ(binomialCoeff(0, 0), 1);
 }
 
-int main() {
-    // Test cases
-    std::cout << binomialCoeff(5, 2) << std::endl;  // Expected output: 10
-    std::cout << binomialCoeff(10, 3) << std::endl; // Expected output: 120
-    std::cout << binomialCoeff(6, 4) << std::endl;  // Expected output: 15
-    std::cout << binomialCoeff(8, 0) << std::endl;  // Expected output: 1
-    std::cout << binomialCoeff(0, 0) << std::endl;  // Expected output: 1
+TEST(factorial, factorialTest) {
+    EXPECT_EQ(factorial(5), 120);
+    EXPECT_EQ(factorial(10), 3628800);
+    EXPECT_EQ(factorial(6), 720);
+    EXPECT_EQ(factorial(8), 40320);
+    EXPECT_EQ(factorial(0), 1);
+    EXPECT_EQ(factorial(20), 2432902008176640000);
+    EXPECT_EQ(factorial(21), -1);
+    EXPECT_EQ(factorial(-1), -1);
+}
 
-    return 0;
+TEST(shapley_frequency, shapleyFrequencyTest) {
+    EXPECT_FLOAT_EQ(shapley_frequency(3, 0), 0.333333343);
+    EXPECT_FLOAT_EQ(shapley_frequency(3, 1), 0.1666667);
+    EXPECT_FLOAT_EQ(shapley_frequency(3, 2), 0.333333343);
+    EXPECT_FLOAT_EQ(shapley_frequency(3, 3), 0.0);
+}
+
+int main(int argc, char* argv[]) {
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

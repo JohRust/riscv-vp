@@ -7,7 +7,7 @@
 #include "unistd.h"
 
 // Some random coefficients for the linear regression model
-float COEFFS[4] = {1.2, 3.4, 5.6, 7.8};
+static float COEFFS[4] = {1.2, 3.4, 5.6, 7.8};
 // Where the prediction requests are put
 static volatile char *const ACCLERATOR_INPUT_ADDR = (char *const)0x50000000;
 
@@ -34,4 +34,4 @@ void wait_nops(uint32_t nOps);
  * @param delay The delay value in number of operations.
  * @return The predicted output value.
  */
-float predict(float *input_data, unsigned int size, unsigned int delay);
+float predict(const float *input_data, unsigned int size, unsigned int delay);

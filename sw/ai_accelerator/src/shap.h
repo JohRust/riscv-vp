@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <cstdint>
 
@@ -9,6 +11,14 @@
  * @param newValues The new values to replace the masked values in the array.
  */
 void replaceValues(std::vector<float>& array, const std::vector<bool>& mask, const std::vector<float>& newValues);
+
+/**
+ * Calculates the factorial of a given number.
+ * 
+ * @param n The number for which the factorial is to be calculated.
+ * @return The factorial of the given number. Returns -1 if the number is greater than 20.
+ */
+uint64_t factorial(uint64_t n);
 
 /**
  * Calculates the binomial coefficient.
