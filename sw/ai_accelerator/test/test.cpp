@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <gtest/gtest.h>
 #include "../src/shap.h"
+#include "../src/ai_caller.h"
 
 TEST(getAsBoolVector, getAsBoolVectorTest) {
     EXPECT_EQ(getAsBoolVector(5, 5), std::vector<bool>({true, false, true, false, false}));
@@ -46,6 +47,16 @@ TEST(shapley_frequency, shapleyFrequencyTest) {
     EXPECT_FLOAT_EQ(shapley_frequency(3, 1), 0.1666667);
     EXPECT_FLOAT_EQ(shapley_frequency(3, 2), 0.333333343);
     EXPECT_FLOAT_EQ(shapley_frequency(3, 3), 0.0); // Special case to avoid undefined behavior 
+}
+
+TEST(req_prediction, reqPredictionTest) {
+    float input_data[4] = {0, 0, 0, 0};
+    req_prediction(input_data, 4);
+    EXPECT_FLOAT_EQ(req_prediction(input_data, 4), 0.0);
+    float input_data2[4] = {1, 2, 3, 4};
+    EXPECT_FLOAT_EQ(req_prediction(input_data2, 4), 56.0);
+    float input_data3[4] = {0, 0, 0, 1};
+    EXPECT_FLOAT_EQ(req_prediction(input_data3, 4), 7.8);
 }
 
 int main(int argc, char* argv[]) {
