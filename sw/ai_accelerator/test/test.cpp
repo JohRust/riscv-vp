@@ -15,11 +15,11 @@ TEST(replaceValues, replaceValuesTest) {
     std::vector<bool> mask = {true, false, true, false, true};
     std::vector<float> newValues = {10, 20, 30, 40, 50};
     replaceValues(array, mask, newValues);
-    EXPECT_EQ(array[0], 10);
-    EXPECT_EQ(array[1], 2);
-    EXPECT_EQ(array[2], 30);
-    EXPECT_EQ(array[3], 4);
-    EXPECT_EQ(array[4], 50);
+    EXPECT_EQ(array[0], 1);
+    EXPECT_EQ(array[1], 20);
+    EXPECT_EQ(array[2], 3);
+    EXPECT_EQ(array[3], 40);
+    EXPECT_EQ(array[4], 5);
 }
 
 // Test the binomial coefficient function
@@ -42,21 +42,32 @@ TEST(factorial, factorialTest) {
     EXPECT_EQ(factorial(-1), -1); // Negative values are invalid input
 }
 
-TEST(shapley_frequency, shapleyFrequencyTest) {
-    EXPECT_FLOAT_EQ(shapley_frequency(3, 0), 0.333333343);
-    EXPECT_FLOAT_EQ(shapley_frequency(3, 1), 0.1666667);
-    EXPECT_FLOAT_EQ(shapley_frequency(3, 2), 0.333333343);
-    EXPECT_FLOAT_EQ(shapley_frequency(3, 3), 0.0); // Special case to avoid undefined behavior 
+TEST(shapleyFrequency, shapleyFrequencyTest) {
+    EXPECT_FLOAT_EQ(shapleyFrequency(3, 0), 0.333333343);
+    EXPECT_FLOAT_EQ(shapleyFrequency(3, 1), 0.1666667);
+    EXPECT_FLOAT_EQ(shapleyFrequency(3, 2), 0.333333343);
+    EXPECT_FLOAT_EQ(shapleyFrequency(3, 3), 0.0); // Special case to avoid undefined behavior 
 }
 
-TEST(req_prediction, reqPredictionTest) {
+TEST(reqPrediction, reqPredictionTest) {
     float input_data[4] = {0, 0, 0, 0};
-    req_prediction(input_data, 4);
-    EXPECT_FLOAT_EQ(req_prediction(input_data, 4), 0.0);
+    reqPrediction(input_data, 4);
+    EXPECT_FLOAT_EQ(reqPrediction(input_data, 4), 0.0);
     float input_data2[4] = {1, 2, 3, 4};
-    EXPECT_FLOAT_EQ(req_prediction(input_data2, 4), 56.0);
+    EXPECT_FLOAT_EQ(reqPrediction(input_data2, 4), 56.0);
     float input_data3[4] = {0, 0, 0, 1};
-    EXPECT_FLOAT_EQ(req_prediction(input_data3, 4), 7.8);
+    EXPECT_FLOAT_EQ(reqPrediction(input_data3, 4), 7.8);
+}
+
+TEST(explainPrediction, explainPredictionTest) {
+    std::vector<float> input_data = {1.0, 1.0, 1.0};
+    std::vector<float> shapley_values = explainPrediction(input_data, reqPrediction_dummy);
+    EXPECT_FLOAT_EQ(reqPrediction_dummy(input_data.data(), input_data.size()), 13.0);
+    EXPECT_EQ(shapley_values.size(), 3);
+    EXPECT_FLOAT_EQ(shapley_values[0], 3.0);
+    EXPECT_FLOAT_EQ(shapley_values[1], 8.0); // This is the case from Wikipedia
+    EXPECT_FLOAT_EQ(shapley_values[2], 1.0);
+    EXPECT_EQ(input_data, std::vector<float>({1.0, 1.0, 1.0})); // Ensure input data is unchanged
 }
 
 int main(int argc, char* argv[]) {

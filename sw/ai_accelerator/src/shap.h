@@ -36,7 +36,7 @@ uint32_t binomialCoeff(uint32_t n, uint32_t k);
  * @param s The number of features in the subset.
  * @return The frequency of feature i in the Shapley value calculation.
  */
-float shapley_frequency(uint32_t n, uint32_t s);
+float shapleyFrequency(uint32_t n, uint32_t s);
 
 /**
  * Calculates the marginal contribution of a feature in the input data based on a given mask.
@@ -51,9 +51,12 @@ float marginalContribution(const std::vector<float>& input_data, const std::vect
  * Explains the prediction of the model by calculating the Shapley value of every value in the input data.
  * 
  * @param input_data The input data vector.
- * @param shapley_values The vector to store the Shapley values in.
+ * @param func The function to be used for prediction.
+ * @param background_data The background data vector. Optional, defaults to a vector of zeros.
+ * @return The vector to store the Shapley values in.
  */
-void explainPrediction(std::vector<float> input_data, std::vector<float>& shapley_values);
+std::vector<float> explainPrediction(std::vector<float> input_data, float (func)(const float*, unsigned int), std::vector<float> background_data);
+std::vector<float> explainPrediction(std::vector<float> input_data, float (func)(const float*, unsigned int));
 
 /**
  * Get a binary representation of n as a vector of bools.

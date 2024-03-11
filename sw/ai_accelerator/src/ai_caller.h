@@ -9,4 +9,6 @@
  *
  * @return The predicted output value.
  */
-float req_prediction(const float *input_data, unsigned int input_size);
+float reqPrediction(const float *input_data, unsigned int input_size);
+
+float reqPrediction_dummy(const float *input_data, unsigned int input_size);
