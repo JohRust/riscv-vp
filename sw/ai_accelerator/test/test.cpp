@@ -61,13 +61,26 @@ TEST(reqPrediction, reqPredictionTest) {
 
 TEST(explainPrediction, explainPredictionTest) {
     std::vector<float> input_data = {1.0, 1.0, 1.0};
-    std::vector<float> shapley_values = explainPrediction(input_data, reqPrediction_dummy);
-    EXPECT_FLOAT_EQ(reqPrediction_dummy(input_data.data(), input_data.size()), 13.0);
+    std::vector<float> background_data = {0.0, 0.0, 0.0};
+    std::vector<float> shapley_values = explainPrediction(input_data, reqPrediction_dummy, background_data);
+    EXPECT_FLOAT_EQ(reqPrediction_dummy(input_data.data(), input_data.size()), 36.0);
     EXPECT_EQ(shapley_values.size(), 3);
-    EXPECT_FLOAT_EQ(shapley_values[0], 3.0);
+    EXPECT_FLOAT_EQ(shapley_values[0], 17.0);
     EXPECT_FLOAT_EQ(shapley_values[1], 8.0); // This is the case from Wikipedia
-    EXPECT_FLOAT_EQ(shapley_values[2], 1.0);
+    EXPECT_FLOAT_EQ(shapley_values[2], 11.0);
     EXPECT_EQ(input_data, std::vector<float>({1.0, 1.0, 1.0})); // Ensure input data is unchanged
+}
+
+TEST(explainPrediction, paretoEffiziencyTest) {
+    std::vector<float> input_data = {1.0, 1.0, 1.0};
+    std::vector<float> background_data = {0.0, 0.0, 0.0};
+    std::vector<float> shapley_values = explainPrediction(input_data, reqPrediction_dummy, background_data);
+    int shapley_sum = 0;
+    for (auto value : shapley_values) {
+        shapley_sum += value;
+        EXPECT_GE(value, 0);
+    }
+    EXPECT_EQ(shapley_sum, 36);
 }
 
 int main(int argc, char* argv[]) {

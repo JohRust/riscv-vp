@@ -24,31 +24,35 @@ float reqPrediction(const float *input_data, unsigned int input_size) {
 float reqPrediction_dummy(const float *input_data, unsigned int input_size) {
 	// {}
 	if (input_data[0] == 0 && input_data[1] == 0 && input_data[2] == 0) {
-		return 1.0;
+		return 0.0;
 	}
+	// {b}
 	if (input_data[0] == 0 && input_data[1] == 1 && input_data[2] == 0) {
-		return 1.0 + 6.0;
+		return 6.0;
 	}
 	// {a}
 	if (input_data[0] == 1 && input_data[1] == 0 && input_data[2] == 0) {
-		return 2.0;
+		return 12.0;
 	}
+	// {a, b}
 	if (input_data[0] == 1 && input_data[1] == 1 && input_data[2] == 0) {
-		return 2.0 + 12.0;
+		return 24.0;
 	}
 	// {c}
 	if (input_data[0] == 0 && input_data[1] == 0 && input_data[2] == 1) {
-		return 3.0;
+		return 9.0;
 	}
+	// {b, c}
 	if (input_data[0] == 0 && input_data[1] == 1 && input_data[2] == 1) {
-		return 3.0 + 6.0;
+		return 15.0;
 	}
 	// {a, c}
 	if (input_data[0] == 1 && input_data[1] == 0 && input_data[2] == 1) {
-		return 4.0;
+		return 27.0;
 	}
+	// {a, b, c}
 	if (input_data[0] == 1 && input_data[1] == 1 && input_data[2] == 1) {
-		return 4.0 + 9.0;
+		return 36.0;
 	}
-	return 0.0;	
+	return 0.0;
 }

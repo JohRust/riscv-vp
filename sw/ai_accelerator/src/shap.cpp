@@ -57,16 +57,15 @@ std::vector<float> explainPrediction(std::vector<float> input_data, float (func)
 	std::vector<bool> mask(n, false);
 
 	for (uint32_t i = 0; i < n; ++i) {  // Shapley value for feature i
-		std::cout << "Feature " << i << std::endl;
 		uint64_t num_subsets = 1 << (n - 1);  // 2^(n-1) subsets of N\{i}
 		for (uint32_t j = 0; j < num_subsets; ++j) {
 			auto mask = getAsBoolVector(j, n - 1);
 			mask.insert(mask.begin() + i, false);  // Add the feature back in
 			// We need to know |S|, the size of the subset
-			uint32_t numMasked = 0;
+			uint32_t subsetSize = 0;
 			for (uint32_t k = 0; k < n; ++k) {
 				if (mask[k]) {
-					numMasked++;
+					subsetSize++;
 				}
 			}
 			std::vector<float> data_masked(input_data);
@@ -75,8 +74,7 @@ std::vector<float> explainPrediction(std::vector<float> input_data, float (func)
 			
 			data_masked[i] = input_data[i];
 			auto pred_with_i = func(&data_masked[0], data_masked.size());
-			std::cout << pred_with_i << " " << pred_without_i << std::endl;
-			shapley_values[i] += shapleyFrequency(n, numMasked) * (pred_with_i - pred_without_i);
+			shapley_values[i] += shapleyFrequency(n, subsetSize) * (pred_with_i - pred_without_i);
 		}
 	}
 	return shapley_values;
