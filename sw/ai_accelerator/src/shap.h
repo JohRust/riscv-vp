@@ -20,6 +20,14 @@ void replaceValues(std::vector<float>& array, const std::vector<bool>& mask, con
  */
 uint64_t factorial(uint64_t n);
 
+
+/**
+ * Samples a random vector from the input data.
+ * @param data The input data vector.
+ * @return A random vector sampled from the input data.
+*/
+std::vector<float> sampleFromData(const std::vector<std::vector<float>> data);
+
 /**
  * Calculates the binomial coefficient.
  *

@@ -37,6 +37,14 @@ uint64_t factorial(uint64_t n) {
 	return res;
 }
 
+std::vector<float> sampleFromData(const std::vector<std::vector<float>> data) {
+	std::vector<float> res;
+	for (size_t i=0; i < data.size(); ++i) {
+		res.push_back(data[rand() % data.size()][rand() % data[0].size()]);
+	}
+	return res;
+}
+
 float shapleyFrequency(uint32_t n, uint32_t s) {
 	// Calculate the frequency of feature i in the shapley value calculation.
 	// Equvalent to (n-s-1)! * s! / n!, but without overflow

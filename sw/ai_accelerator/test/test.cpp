@@ -83,6 +83,16 @@ TEST(explainPrediction, paretoEffiziencyTest) {
     EXPECT_EQ(shapley_sum, 36);
 }
 
+TEST(sampleFromData, sampleFromDataTest) {
+    std::vector<std::vector<float>> data = {{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}};
+    std::vector<float> sample = sampleFromData(data);
+    EXPECT_EQ(sample.size(), 3);
+    for (auto value : sample) {
+        EXPECT_GE(value, 1.0);
+        EXPECT_LE(value, 9.0);
+    }
+}
+
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
