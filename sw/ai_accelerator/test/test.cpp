@@ -26,7 +26,9 @@ TEST(replaceValues, replaceValuesTest) {
 TEST(binomialCoeff, bonimialCoeffTest) {
     EXPECT_EQ(binomialCoeff(5, 2), 10);
     EXPECT_EQ(binomialCoeff(10, 3), 120);
+    EXPECT_EQ(binomialCoeff(1000, 999), 1000);
     EXPECT_EQ(binomialCoeff(6, 4), 15);
+    EXPECT_EQ(binomialCoeff(6, 2), 15);
     EXPECT_EQ(binomialCoeff(8, 0), 1);
     EXPECT_EQ(binomialCoeff(0, 0), 1);
 }
@@ -71,7 +73,7 @@ TEST(explainPrediction, explainPredictionTest) {
     EXPECT_EQ(input_data, std::vector<float>({1.0, 1.0, 1.0})); // Ensure input data is unchanged
 }
 
-TEST(explainPrediction, paretoEffiziencyTest) {
+TEST(explainPrediction, paretoEfficiencyTest) {
     std::vector<float> input_data = {1.0, 1.0, 1.0};
     std::vector<float> background_data = {0.0, 0.0, 0.0};
     std::vector<float> shapley_values = explainPrediction(input_data, reqPrediction_dummy, background_data);
@@ -84,13 +86,17 @@ TEST(explainPrediction, paretoEffiziencyTest) {
 }
 
 TEST(sampleFromData, sampleFromDataTest) {
-    std::vector<std::vector<float>> data = {{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}};
+    std::vector<std::vector<float>> data = {{1.0, 12.0, 23.0, 34.0}, {4.0, 15.0, 26.0, 37.0}, {7.0, 18.0, 29.0, 39.0}};
     std::vector<float> sample = sampleFromData(data);
-    EXPECT_EQ(sample.size(), 3);
-    for (auto value : sample) {
-        EXPECT_GE(value, 1.0);
-        EXPECT_LE(value, 9.0);
-    }
+    EXPECT_EQ(sample.size(), 4);
+    EXPECT_GE(sample[0], 1.0);
+    EXPECT_LE(sample[0], 7.0);
+    EXPECT_GE(sample[1], 12.0);
+    EXPECT_LE(sample[1], 18.0);
+    EXPECT_GE(sample[2], 23.0);
+    EXPECT_LE(sample[2], 29.0);
+    EXPECT_GE(sample[3], 34.0);
+    EXPECT_LE(sample[3], 39.0);
 }
 
 int main(int argc, char* argv[]) {
