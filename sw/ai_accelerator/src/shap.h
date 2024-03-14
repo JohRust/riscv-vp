@@ -22,7 +22,7 @@ uint64_t factorial(uint64_t n);
 
 
 /**
- * Samples a random vector from the input data.
+ * Creates a new vector by sampling each feature from a vector in the input data.
  * @param data The input data vector.
  * @return A random vector sampled from the input data.
 */

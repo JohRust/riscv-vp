@@ -39,8 +39,8 @@ uint64_t factorial(uint64_t n) {
 
 std::vector<float> sampleFromData(const std::vector<std::vector<float>> data) {
 	std::vector<float> res;
-	for (size_t i=0; i < data.size(); ++i) {
-		res.push_back(data[rand() % data.size()][rand() % data[0].size()]);
+	for (size_t i=0; i < data[0].size(); ++i) {
+		res.push_back(data[rand() % data.size()][i]);
 	}
 	return res;
 }
