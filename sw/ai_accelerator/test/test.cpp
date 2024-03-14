@@ -105,13 +105,20 @@ TEST(sampleFromData, sampleFromDataTest) {
         EXPECT_EQ(value, 0.0);
     }
 }
-/*
+
+/* Test the Shapley value calculation of a linear regression model.
+The coefficients become larger as the index increases,
+so the Shapley value should be larger for the later indices.
+*/
 TEST(explainPrediction, explainPredictionTest2) {
-    std::vector<float> input_data = {1.0, 2.0, 3.0};
-    std::vector<std::vector<float>> background_data = {{0.0, 0.5, 1.0}, {0.0, 0.5, 1.0}, {0.0, 0.5, 1.0}};
+    std::vector<float> input_data = {1.0, 2.0, 3.0, 4.0};
+    std::vector<std::vector<float>> background_data = {{0.0, 0.5, 1.0, 1.5}, {1.0, 1.5, 2.0, 2.5}, {2.0, 2.5, 3.0, 3.5}};
     std::vector<float> shapley_values = explainPrediction(input_data, reqPrediction, background_data);
-    EXPECT_FLOAT_EQ(reqPrediction_dummy(input_data.data(), input_data.size()), 36.0);
-}*/
+    EXPECT_EQ(shapley_values.size(), input_data.size());
+    EXPECT_GE(shapley_values[3], shapley_values[2]);
+    EXPECT_GE(shapley_values[2], shapley_values[1]);
+    EXPECT_GE(shapley_values[1], shapley_values[0]);
+}
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

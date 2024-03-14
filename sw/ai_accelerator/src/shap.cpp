@@ -1,7 +1,6 @@
 #include "shap.h"
 #include <cstdint>
 #include <iostream>
-
 #include "ai_caller.h"
 
 void replaceValues(std::vector<float>& array, const std::vector<bool>& mask, const std::vector<float>& newValues) {
