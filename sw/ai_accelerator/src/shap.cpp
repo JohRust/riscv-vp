@@ -55,11 +55,11 @@ float shapleyFrequency(uint32_t n, uint32_t s) {
 }
 
 std::vector<float> explainPrediction(std::vector<float> input_data, float (func)(const float*, unsigned int)) {
-	std::vector<float> bgData(input_data.size(), 0);
+	std::vector<std::vector<float>> bgData = {std::vector<float>(input_data.size(), 0)};
 	return explainPrediction(input_data, func, bgData);
 }
 
-std::vector<float> explainPrediction(std::vector<float> input_data, float (func)(const float*, unsigned int), std::vector<float> background_data) {
+std::vector<float> explainPrediction(std::vector<float> input_data, float (func)(const float*, unsigned int), std::vector<std::vector<float>> background_data) {
 	uint32_t n = input_data.size();
 	std::vector<float> shapley_values(n, 0);
 	std::vector<bool> mask(n, false);
@@ -77,7 +77,8 @@ std::vector<float> explainPrediction(std::vector<float> input_data, float (func)
 				}
 			}
 			std::vector<float> data_masked(input_data);
-			replaceValues(data_masked, mask, background_data);
+			auto sampled_background = sampleFromData(background_data);
+			replaceValues(data_masked, mask, sampled_background);
 			auto pred_without_i = func(&data_masked[0], data_masked.size());
 			
 			data_masked[i] = input_data[i];

@@ -61,7 +61,7 @@ TEST(reqPrediction, reqPredictionTest) {
 
 TEST(explainPrediction, explainPredictionTest) {
     std::vector<float> input_data = {1.0, 1.0, 1.0};
-    std::vector<float> background_data = {0.0, 0.0, 0.0};
+    std::vector<std::vector<float>> background_data = {{0.0, 0.0, 0.0}};
     std::vector<float> shapley_values = explainPrediction(input_data, reqPrediction_dummy, background_data);
     EXPECT_FLOAT_EQ(reqPrediction_dummy(input_data.data(), input_data.size()), 36.0);
     EXPECT_EQ(shapley_values.size(), 3);
@@ -73,7 +73,7 @@ TEST(explainPrediction, explainPredictionTest) {
 
 TEST(explainPrediction, paretoEffiziencyTest) {
     std::vector<float> input_data = {1.0, 1.0, 1.0};
-    std::vector<float> background_data = {0.0, 0.0, 0.0};
+    std::vector<std::vector<float>> background_data = {{0.0, 0.0, 0.0}};
     std::vector<float> shapley_values = explainPrediction(input_data, reqPrediction_dummy, background_data);
     int shapley_sum = 0;
     for (auto value : shapley_values) {
@@ -91,7 +91,20 @@ TEST(sampleFromData, sampleFromDataTest) {
         EXPECT_GE(value, 1.0);
         EXPECT_LE(value, 9.0);
     }
+    data = {{0.0, 0.0, 0.0}};
+    sample = sampleFromData(data);
+    EXPECT_EQ(sample.size(), 3);
+    for (auto value : sample) {
+        EXPECT_EQ(value, 0.0);
+    }
 }
+/*
+TEST(explainPrediction, explainPredictionTest2) {
+    std::vector<float> input_data = {1.0, 2.0, 3.0};
+    std::vector<std::vector<float>> background_data = {{0.0, 0.5, 1.0}, {0.0, 0.5, 1.0}, {0.0, 0.5, 1.0}};
+    std::vector<float> shapley_values = explainPrediction(input_data, reqPrediction, background_data);
+    EXPECT_FLOAT_EQ(reqPrediction_dummy(input_data.data(), input_data.size()), 36.0);
+}*/
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

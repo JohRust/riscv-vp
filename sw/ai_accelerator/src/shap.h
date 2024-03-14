@@ -63,7 +63,7 @@ float marginalContribution(const std::vector<float>& input_data, const std::vect
  * @param background_data The background data vector. Optional, defaults to a vector of zeros.
  * @return The vector to store the Shapley values in.
  */
-std::vector<float> explainPrediction(std::vector<float> input_data, float (func)(const float*, unsigned int), std::vector<float> background_data);
+std::vector<float> explainPrediction(std::vector<float> input_data, float (func)(const float*, unsigned int), std::vector<std::vector<float>> background_data);
 std::vector<float> explainPrediction(std::vector<float> input_data, float (func)(const float*, unsigned int));
 
 /**
