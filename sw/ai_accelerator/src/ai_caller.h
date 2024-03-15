@@ -11,4 +11,7 @@
  */
 float reqPrediction(const float *input_data, unsigned int input_size);
 
+/** Simulates a prediction function like the example from Wikipedia for testing purposes:
+ * https://en.wikipedia.org/wiki/Shapley_value#Example
+ */
 float reqPrediction_dummy(const float *input_data, unsigned int input_size);

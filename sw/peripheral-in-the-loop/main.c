@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "../simple-sensor/irq.h"
+#include "irq.h"
 
 typedef uint32_t BUS_BRIDGE_TYPE;
 static volatile BUS_BRIDGE_TYPE * const BUS_BRIDGE_START = (BUS_BRIDGE_TYPE * const) 0x50000000;

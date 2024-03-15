@@ -22,7 +22,7 @@ static volatile char *const ACCLERATOR_INPUT_ADDR = (char *const)0x50000000;
 void wait_nops(uint32_t nOps);
 
 /**
- * Predicts the output based on the input data using a linear regression model.
+ * @brief Predicts the output based on the input data using a linear regression model.
  *
  * This function takes an array of input data, the size of the array, and a delay
  * value as parameters. It calculates the sum of the product of each element in

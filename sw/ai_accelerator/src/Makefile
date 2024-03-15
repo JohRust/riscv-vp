@@ -1,6 +1,16 @@
-OBJECTS  = main.o entry.o
+OBJECTS  = main.o entry.o ai_accelerator.o ai_caller.o shap.o irq.o
 CFLAGS   = -march=rv32i -mabi=ilp32
 LDFLAGS  = -Wl,-e_reset_vector
 VP_FLAGS = --error-on-zero-traphandler=true
 
 include ../../Makefile.common
+override LD = $(CXX)
+
+# Make test target and run tests
+test:
+	$(MAKE) -C ../test
+	./../test/test_all
+
+clean: test_clean # Add test_clean to clean target
+test_clean::# Clean test directory
+	$(MAKE) -C ../test clean
