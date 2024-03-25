@@ -1,5 +1,6 @@
 OBJECTS  = main.o entry.o irq.o ai_accelerator.o ai_caller.o shap.o
-CFLAGS   = -march=rv32i -mabi=ilp32
+CFLAGS   = -march=rv32i -mabi=ilp32 -g
+CXXFLAGS = -march=rv32i -mabi=ilp32 -g
 LDFLAGS  = -nostartfiles -Wl,--no-relax
 VP_FLAGS = --error-on-zero-traphandler=true
 
