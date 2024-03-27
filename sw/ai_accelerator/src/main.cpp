@@ -6,18 +6,12 @@
 extern "C" {
 	#include "irq.h"
 }
-volatile int was_itr_triggered = 0;
 
 volatile bool has_sensor_data = 0;
 
 void sensor_irq_handler() {
 	has_sensor_data = 1;
 }
-
-// TODO: Call this
-// void init() {
-//	register_interrupt_handler(4, dma_irq_handler);
-//}
 
 int main(int argc, char **argv) {
 	register_interrupt_handler(2, sensor_irq_handler);
