@@ -1,7 +1,8 @@
-OBJECTS  = main.o bootstrap.o ai_accelerator.o ai_caller.o shap.o
+OBJECTS  = main.o entry.o ai_accelerator.o ai_caller.o shap.o irq.o
 CFLAGS   = -march=rv32i -mabi=ilp32 -g
 CXXFLAGS = -march=rv32i -mabi=ilp32 -g
 LDFLAGS  = -nostartfiles -Wl,--no-relax
+VP_FLAGS = --error-on-zero-traphandler=true # Should be true
 
 include ../../Makefile.common
 override LD = $(CXX)
