@@ -13,7 +13,6 @@ csrr a6, mhartid
 sw   a6, 0(t0)
 .endm
 
-
 _start:
 la t0, level_0_interrupt_handler
 csrw mtvec, t0
@@ -24,6 +23,7 @@ li t0, PLIC_ENABLED_IRQ_ADDR
 li t1, -1
 sw t1, 0(t0)
 sw t1, 4(t0)
+
 jal main
 
 # call exit (SYS_EXIT=93) with exit code 0 (argument in a0)
