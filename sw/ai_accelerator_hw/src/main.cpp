@@ -19,9 +19,10 @@ int main(int argc, char **argv) {
 	std::vector<std::vector<float>> background_data = {
 		{0.0, 0.5, 1.0, 1.5}, {1.0, 1.5, 2.0, 2.5}, {2.0, 2.5, 3.0, 3.5}};
 	std::vector<float> shapley_values = explainPrediction(input_data, reqPrediction, background_data);
-	printf("Shapley values: ");
+	printf("Shapley values:\n");
 	for (auto value : shapley_values) {
 		printf("%f ", value);
 	}
+	puts("\n");
 	return 0;
 }
