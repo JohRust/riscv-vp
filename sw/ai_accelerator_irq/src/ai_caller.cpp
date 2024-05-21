@@ -13,26 +13,26 @@ static volatile uint32_t * const DMA_STAT_ADDR = (uint32_t * const)0x70000010;
 static const uint32_t DMA_OP_NOP = 0;
 static const uint32_t DMA_OP_MEMCPY = 1;
 
-volatile bool has_prediction_data = false;
+volatile bool prediction_done = false;
 
 float reqPredictionFPGA(const float *input_data, unsigned int input_size) {
 	float pred = predict(input_data, input_size, 0);
 	// Imagine that the prediction is done on a parallel hardware accelerator
-	has_prediction_data = true;
+	prediction_done = false;
 	float pred_in_memory;
 	*DMA_SRC_ADDR = (uint32_t)(&pred);
 	*DMA_DST_ADDR = (uint32_t)(&pred_in_memory);
 	*DMA_LEN_ADDR = sizeof(pred);
 	*DMA_OP_ADDR  = DMA_OP_MEMCPY;
 
-	while (has_prediction_data) {
+	while (!prediction_done) {
 		asm volatile("wfi");
 	}
 	return pred_in_memory;
 }
 
 void dma_irq_handler() {
-	has_prediction_data = false;
+	prediction_done = true;
 }
 
 void init_dma() {
