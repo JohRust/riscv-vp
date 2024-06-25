@@ -57,6 +57,11 @@
 #define SYS_host_test_pass 2  // RISC-V test execution successfully completed
 #define SYS_host_test_fail 3  // RISC-V test execution failed
 
+#define SYS_traces 700  // setting writing trace data
+#define SYS_custom1 701  // custom syscall, link it to whatever you need
+#define SYS_custom2 702  // custom syscall, link it to whatever you need
+#define SYS_custom3 703  // custom syscall, link it to whatever you need
+
 #include <tlm_utils/simple_target_socket.h>
 #include <systemc>
 

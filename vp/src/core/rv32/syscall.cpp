@@ -199,6 +199,19 @@ int sys_close(int fd) {
 	}
 }
 
+uint32_t binomialCoeff(uint32_t n, uint32_t k) {
+	// Calculate the binomial coefficient
+	if (k > n - k) {
+		k = n - k;
+	}
+	int res = 1;
+	for (int i = 0; i < k; ++i) {  // tested
+		res *= (n - i);
+		res /= (i + 1);
+	}
+	return res;
+}
+
 /*
  *  TODO: Some parameters need to be aligned to the hosts word width (mostly 64 bit)
  *	Especially when coming from a 32 bit guest system.
@@ -254,6 +267,22 @@ int SyscallHandler::execute_syscall(uint64_t n, uint64_t _a0, uint64_t _a1, uint
 		case SYS_host_test_fail:
 			std::cout << "TEST_FAIL (testnum = " << _a0 << ")" << std::endl;
 			shall_exit = true;
+			return 0;
+
+		case SYS_traces:
+			//TODO: implement
+			return 0;
+
+		case SYS_custom1:
+			std::cout << "custom syscall 1 with a0=" << _a0 << " and a1=" << _a1 << std::endl;
+			return binomialCoeff(_a0, _a1);
+
+		case SYS_custom2:
+			std::cout << "custom syscall 2" << std::endl;
+			return 0;
+
+		case SYS_custom3:
+			std::cout << "custom syscall 3" << std::endl;
 			return 0;
 	}
 
