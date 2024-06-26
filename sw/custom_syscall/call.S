@@ -39,3 +39,5 @@ jal main
 #li   t0, SYSCALL_ADDR
 #csrr a6, mhartid
 #sw   a6, 0(t0)
+
+SYS_EXIT 0
