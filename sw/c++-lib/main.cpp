@@ -26,6 +26,9 @@ struct B : public A {
 
 int main() {
 	std::cout << "Hello World\n";
+	float af = 1.0;
+	float bf = 2.0;
+	float cf = af + bf;
 	B x(5, 2);
 	auto a = x.foo();
 	auto b = x.bar();
